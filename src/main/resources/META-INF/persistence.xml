@@ -8,6 +8,7 @@
 
     <properties>
       <property name="hibernate.show_sql" value="true" />
+      <property name="hibernate.jpa.compliance.query" value="false"/>
     </properties>
   </persistence-unit>
 

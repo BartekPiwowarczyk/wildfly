@@ -3,6 +3,7 @@ package com.example.wildfly.service;
 
 import com.example.wildfly.model.dto.ArtistDTO;
 import com.example.wildfly.model.entity.Artist;
+import com.example.wildfly.model.entity.Artist_;
 import com.example.wildfly.model.mapper.ArtistMapper;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
@@ -21,7 +22,7 @@ public class ArtistService {
     @PersistenceContext
     EntityManager em;
 
-    @PersistenceContext transient
+    @Inject
     ArtistMapper artistMapper;
 
 
@@ -62,8 +63,8 @@ public class ArtistService {
         CriteriaQuery<ArtistDTO> query = criteriaBuilder.createQuery(ArtistDTO.class);
         Root<Artist> root = query.from(Artist.class);
 
-        query.select(criteriaBuilder.construct(ArtistDTO.class,root.get("name"),root.get("firstname")))
-                .where(criteriaBuilder.equal(root.get("id"),criteriaBuilder.parameter(Long.class,"id")));
+        query.select(criteriaBuilder.construct(ArtistDTO.class,root.get(Artist_.name),root.get(Artist_.firstname)))
+                .where(criteriaBuilder.equal(root.get(Artist_.id),criteriaBuilder.parameter(Long.class,"id")));
 
         return em.createQuery(query).setParameter("id",id).getResultList().stream().findFirst().orElse(null);
     }
@@ -76,7 +77,7 @@ public class ArtistService {
         CriteriaQuery<Artist> query = criteriaBuilder.createQuery(Artist.class);
         Root<Artist> root = query.from(Artist.class);
 
-        query.where(criteriaBuilder.equal(root.get("name"),criteriaBuilder.parameter(String.class,"name")));
+        query.where(criteriaBuilder.equal(root.get(Artist_.name),criteriaBuilder.parameter(String.class,"name")));
 
         return em.createQuery(query).setParameter("name",name).getResultList().stream().findFirst().orElse(null);
     }
