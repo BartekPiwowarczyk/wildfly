@@ -1,0 +1,3 @@
+<system-properties>
+    <property name="spotify-api" value="https://api.spotify.com/v1"/>
+</system-properties>

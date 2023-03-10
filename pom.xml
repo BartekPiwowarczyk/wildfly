@@ -18,6 +18,19 @@
         <hibernate-core.version>6.1.5.Final</hibernate-core.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- importing the microprofile BOM adds MicroProfile specs -->
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-microprofile</artifactId>
+                <version>27.0.1.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>jakarta.faces</groupId>

@@ -9,8 +9,8 @@ import java.io.Serializable;
 public class AuthConfig implements Serializable {
 
 
-    @ConfigProperty(name = "spotify.clientId")private String clientId;
-    @ConfigProperty(name = "spotify.clientSecret") private String clientSecret;
+    private String clientId=System.getProperty("spotify.clientId");
+    private String clientSecret=System.getProperty("spotify.clientSecret");
 
     public String getClientId() {
         return clientId;

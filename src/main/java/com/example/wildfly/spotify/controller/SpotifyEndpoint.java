@@ -25,6 +25,7 @@ public class SpotifyEndpoint {
 
     Logger LOGGER = LoggerFactory.getLogger(SpotifyEndpoint.class);
 
+    @Inject
     @RestClient
     SpotifyInterface spotifyInterface;
 
