@@ -3,26 +3,21 @@ package com.example.wildfly.spotify.service;
 import com.example.wildfly.spotify.auth.AuthEndpoint;
 import com.example.wildfly.spotify.auth.TokenService;
 import com.example.wildfly.spotify.controller.SpotifyEndpoint;
-import com.example.wildfly.spotify.interfaces.SpotifyInterface;
-import com.example.wildfly.spotify.model.dto.AlbumSpotify;
 import com.example.wildfly.spotify.model.dto.SearchAlbumResponse;
 import com.example.wildfly.spotify.model.dto.TrackSpotify;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.ws.rs.NotFoundException;
-import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 @SessionScoped
@@ -39,6 +34,13 @@ public class SpotifyServiceFacelets implements Serializable {
     TokenService tokenService;
     private String albumName="";
     private List<TrackSpotify> allTrack = new ArrayList<>();
+    private List<TrackSpotify> trackForFilter = new ArrayList<>();
+    private String searchKeyUpText="";
+
+    public boolean isAlbumNameBlank() {
+        LOGGER.info("isPresent: " + albumName);
+       return albumName.isBlank() ? true:false;
+    }
     public String getAlbumName() {
         return albumName;
     }
@@ -55,6 +57,22 @@ public class SpotifyServiceFacelets implements Serializable {
         this.allTrack = allTrack;
     }
 
+    public List<TrackSpotify> getTrackForFilter() {
+        return trackForFilter;
+    }
+
+    public void setTrackForFilter(List<TrackSpotify> trackForFilter) {
+        this.trackForFilter = trackForFilter;
+    }
+
+    public String getSearchKeyUpText() {
+        return searchKeyUpText;
+    }
+
+    public void setSearchKeyUpText(String searchKeyUpText) {
+        this.searchKeyUpText = searchKeyUpText;
+    }
+
     public List<TrackSpotify> getAlbumTracks(String albumId) {
         if(tokenService.getAuth() == null) {
             LOGGER.info("New Token");
@@ -64,23 +82,6 @@ public class SpotifyServiceFacelets implements Serializable {
         return tracks;
     }
 
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public List<TrackSpotify> getAlbumTracksAfterSearch() {
-//        if(tokenService.getAuth() == null) {
-//            LOGGER.info("New Token");
-//            authEndpoint.authSpotify();
-//        }
-//        LOGGER.info("jestem");
-//        SearchAlbumResponse res = spotifyEndpoint.getAlbumFromSearch(albumName);
-//
-//        LOGGER.info("res " + res);
-//        String albumId= res.albums().items().stream().findFirst().map(albumSpotify -> albumSpotify.id()).orElseThrow(()->new NotFoundException("Brak albumu"));
-//        LOGGER.info("tutaj " + albumId);
-//        List<TrackSpotify> items = getAlbumTracks(albumId);
-//        LOGGER.info("Tracks " + items);
-//
-//        return items;
-//    }
 
     @Produces(MediaType.APPLICATION_JSON)
     public void getAlbumTracksAfterSearch() {
@@ -97,6 +98,12 @@ public class SpotifyServiceFacelets implements Serializable {
         List<TrackSpotify> items = getAlbumTracks(albumId);
         LOGGER.info("Tracks " + items);
         allTrack=items;
+        trackForFilter=items;
 
+    }
+
+    public void filterTracks() {
+        trackForFilter = allTrack.stream().filter(trackSpotify -> trackSpotify.name().contains(searchKeyUpText)).collect(Collectors.toList());
+        LOGGER.info("Filter allTrack " + allTrack);
     }
 }

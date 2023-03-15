@@ -6,13 +6,11 @@
       xmlns:h="jakarta.faces.html"
       xmlns:jsf="jakarta.faces"
       xmlns:ui="jakarta.faces.facelets"
-      xmlns:c="jakarta.tags.core">
-
-
-<head jsf:id="head">
-    <title>Główna</title>
-    <h:outputStylesheet library="css" name="spotifyCss.css?V=15"/>
-</head>
+      xmlns:c="jakarta.tags.core"
+      xmlns:f="jakarta.faces.core">
+<ui:include src="static/header.xhtml"></ui:include>
+<title>Główna</title>
+<ui:include src="static/navigationMain.xhtml"></ui:include>
 
 <body jsf:id="body">
 <section jsf:id="section">
@@ -21,24 +19,33 @@
         <input type="text" jsf:value="#{spotifyServiceFacelets.albumName}"/>
         <button class="btn" jsf:action="#{spotifyServiceFacelets.getAlbumTracksAfterSearch}">Szukaj</button>
     </form>
-    <c:if test="#{spotifyServiceFacelets.albumName.equals('')}">
+    <c:if test="#{spotifyServiceFacelets.albumNameBlank}">
         <h2> Brak listy piosenek do wyświetlenia</h2>
         <p>Wyszukaj Album</p>
     </c:if>
-    <c:if test="#{!spotifyServiceFacelets.albumName.equals('')}">
+    <c:if test="#{!spotifyServiceFacelets.albumNameBlank}">
+        <form jsf:id="searchKeyUp">
+            <input type="text" jsf:id="searchInputKeyUp" jsf:value="#{spotifyServiceFacelets.searchKeyUpText}">
+                <f:ajax execute="searchInputKeyUp" render=":table searchInputKeyUp"
+                        event="keyup" listener="#{spotifyServiceFacelets.filterTracks}"
+                        delay="300"/>
+            </input>
+        </form>
         <table jsf:id="table">
             <tr>
                 <th>Track Number</th>
                 <th>Title</th>
                 <th>Duration</th>
             </tr>
-            <ui:repeat value="#{spotifyServiceFacelets.allTrack}" var="track">
+
+            <ui:repeat value="#{spotifyServiceFacelets.trackForFilter}" var="track">
                 <tr>
                     <td>#{track.track_number()}</td>
                     <td>#{track.name()}</td>
                     <td>#{track.duration_ms()}</td>
                 </tr>
             </ui:repeat>
+
         </table>
     </c:if>
 </section>
