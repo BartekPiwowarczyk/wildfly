@@ -3,14 +3,45 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:jsf="jakarta.faces"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:c="jakarta.tags.core">
 
-<h:head>
-    <title>Title</title>
-</h:head>
 
-<h:body>
-    <p>Hello from Facelet</p>
-</h:body>
+<head jsf:id="head">
+    <title>Główna</title>
+    <h:outputStylesheet library="css" name="spotifyCss.css?V=15"/>
+</head>
+
+<body jsf:id="body">
+<section jsf:id="section">
+    <h1>Spotify list of tracks</h1>
+    <form jsf:id="inputForm" class="search-tag-link">
+        <input type="text" jsf:value="#{spotifyServiceFacelets.albumName}"/>
+        <button class="btn" jsf:action="#{spotifyServiceFacelets.getAlbumTracksAfterSearch}">Szukaj</button>
+    </form>
+    <c:if test="#{spotifyServiceFacelets.albumName.equals('')}">
+        <h2> Brak listy piosenek do wyświetlenia</h2>
+        <p>Wyszukaj Album</p>
+    </c:if>
+    <c:if test="#{!spotifyServiceFacelets.albumName.equals('')}">
+        <table jsf:id="table">
+            <tr>
+                <th>Track Number</th>
+                <th>Title</th>
+                <th>Duration</th>
+            </tr>
+            <ui:repeat value="#{spotifyServiceFacelets.allTrack}" var="track">
+                <tr>
+                    <td>#{track.track_number()}</td>
+                    <td>#{track.name()}</td>
+                    <td>#{track.duration_ms()}</td>
+                </tr>
+            </ui:repeat>
+        </table>
+    </c:if>
+</section>
+</body>
 
 </html>

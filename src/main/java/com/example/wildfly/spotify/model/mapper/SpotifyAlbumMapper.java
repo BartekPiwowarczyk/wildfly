@@ -10,7 +10,7 @@ import org.mapstruct.MappingConstants;
 public abstract class SpotifyAlbumMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "edition",source = "title")
+    @Mapping(target = "edition",source = "name")
     @Mapping(target = "artistId",ignore = true)
     @Mapping(target = "albumSongs",ignore = true)
     public abstract Album fromAlbumSpotifyResponse(AlbumSpotify albumSpotify);

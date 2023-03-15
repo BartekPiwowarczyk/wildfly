@@ -1,7 +1,9 @@
 package com.example.wildfly.model.entity;
 
+import jakarta.inject.Named;
 import jakarta.persistence.*;
 
+@Named
 @Entity
 @NamedQuery(name="Artist.findById",query = "SELECT NEW com.example.wildfly.model.dto.ArtistDTO(a.name,a.firstname) FROM Artist a where a.id= :id")
 @NamedQuery(name="Artist.findArtistByName",query = "SELECT a FROM Artist a where a.name= :name")

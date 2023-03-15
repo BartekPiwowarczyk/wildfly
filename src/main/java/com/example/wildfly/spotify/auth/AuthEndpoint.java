@@ -43,7 +43,7 @@ public class AuthEndpoint {
         LOGGER.info("Here you are! Authorization " + authorization);
         SpotifyAuthResponse token = spotifyAuthInterface.getToken(authorization, "client_credentials");
         LOGGER.info("Masz ten token?");
-        tokenService.setAuth(token.accessToken());
+        tokenService.setAuth(token.access_token());
         return token;
     }
 

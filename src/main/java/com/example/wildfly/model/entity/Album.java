@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+
 @NamedQuery(name="Album.findById",query="select distinct al from Album al join fetch al.artistId art join fetch al.albumSongs so join fetch so.song where al.id= :id order by so.position asc")
 @NamedQuery(name="Album.findByIdWithResultTransformer",query = "select a.id,a.title,a.edition, ar, aso from Album a  join a.artistId ar left join a.albumSongs aso left join fetch aso.song song where a.id=:id")
 @NamedQuery(name = "Album.findWithResultTransformer",query = "select a.id,a.title,a.edition, ar, aso.position, song.title,song.remarks,song.duration from Album a left join a.artistId ar left join a.albumSongs aso left join aso.song song")

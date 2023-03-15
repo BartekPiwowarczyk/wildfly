@@ -9,7 +9,11 @@ import com.example.wildfly.model.entity.Artist;
 import com.example.wildfly.service.AlbumService;
 import com.example.wildfly.service.ArtistService;
 import com.example.wildfly.service.SongService;
+
+import jakarta.annotation.ManagedBean;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -19,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.util.List;
 
+@ApplicationScoped
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class MusicController {
@@ -33,6 +38,13 @@ public class MusicController {
     @Inject
     AlbumService albumService;
 
+
+//    @GET
+//    @Path("/artists/{name}")
+//    public String getArtistByName(@PathParam("name") String name) {
+//        artistService.getArtistByNameWithCriteria(name);
+//        return "artist";
+//    }
 
     @GET
     @Path("/artists/{name}")
@@ -98,6 +110,8 @@ public class MusicController {
             throw new NotFoundException();
         }
     }
+
+
     @GET
     @Path("/albums/criteria/{id}")
     public Album getAlbumById(@PathParam("id") Long id) {

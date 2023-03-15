@@ -2,8 +2,13 @@ package com.example.wildfly.spotify.service;
 
 import com.example.wildfly.model.entity.Album;
 import com.example.wildfly.spotify.model.dto.AlbumSpotify;
+import com.example.wildfly.spotify.model.dto.SearchAlbumResponse;
+import com.example.wildfly.spotify.model.dto.TrackSpotify;
 import com.example.wildfly.spotify.model.mapper.SpotifyAlbumMapper;
 import jakarta.persistence.PersistenceContext;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +16,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+
+import java.util.List;
 
 
 @ApplicationScoped
@@ -30,6 +37,7 @@ public class SpotifyAlbumService {
         em.persist(album);
         LOGGER.info("Album added to db");
         return albumSpotify;
-
     }
+
+
 }

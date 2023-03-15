@@ -14,7 +14,7 @@ public interface SpotifyAuthInterface {
 
     @Path("/token")
     @POST
-    @Consumes("application/x-www-form-urlencoded")
+    @Consumes("application/json")
     SpotifyAuthResponse getToken(
             @HeaderParam("Authorization") String authorization,
             @FormParam("grant_type") String grantType
