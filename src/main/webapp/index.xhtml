@@ -38,7 +38,7 @@
                 <th>Duration</th>
             </tr>
 
-            <ui:repeat value="#{spotifyServiceFacelets.trackForFilter}" var="track">
+            <ui:repeat value="#{spotifyServiceFacelets.filterTracks()}" var="track">
                 <tr>
                     <td>#{track.track_number()}</td>
                     <td>#{track.name()}</td>

@@ -34,7 +34,7 @@ public class SpotifyServiceFacelets implements Serializable {
     TokenService tokenService;
     private String albumName="";
     private List<TrackSpotify> allTrack = new ArrayList<>();
-    private List<TrackSpotify> trackForFilter = new ArrayList<>();
+
     private String searchKeyUpText="";
 
     public boolean isAlbumNameBlank() {
@@ -57,13 +57,6 @@ public class SpotifyServiceFacelets implements Serializable {
         this.allTrack = allTrack;
     }
 
-    public List<TrackSpotify> getTrackForFilter() {
-        return trackForFilter;
-    }
-
-    public void setTrackForFilter(List<TrackSpotify> trackForFilter) {
-        this.trackForFilter = trackForFilter;
-    }
 
     public String getSearchKeyUpText() {
         return searchKeyUpText;
@@ -98,12 +91,11 @@ public class SpotifyServiceFacelets implements Serializable {
         List<TrackSpotify> items = getAlbumTracks(albumId);
         LOGGER.info("Tracks " + items);
         allTrack=items;
-        trackForFilter=items;
-
     }
 
-    public void filterTracks() {
-        trackForFilter = allTrack.stream().filter(trackSpotify -> trackSpotify.name().contains(searchKeyUpText)).collect(Collectors.toList());
+    public List<TrackSpotify> filterTracks() {
+        List<TrackSpotify> trackForFilter = allTrack.stream().filter(trackSpotify -> trackSpotify.name().contains(searchKeyUpText)).collect(Collectors.toList());
         LOGGER.info("Filter allTrack " + allTrack);
+        return trackForFilter;
     }
 }
