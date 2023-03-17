@@ -14,40 +14,61 @@
 
 <body jsf:id="body">
 <section jsf:id="section">
-    <h1>Spotify list of tracks</h1>
-    <form jsf:id="inputForm" class="search-tag-link">
+    <h1>Spotify Search</h1>
+
+    <!-- Szukanie albumu   -->
+    <form jsf:id="formSearchAlbum" class="search-tag-link">
         <input type="text" jsf:value="#{spotifyServiceFacelets.albumName}"/>
-        <button class="btn" jsf:action="#{spotifyServiceFacelets.getAlbumTracksAfterSearch}">Szukaj</button>
+        <button class="btn" jsf:action="#{spotifyServiceFacelets.getAllAlbumsAfterSearch()}">Szukaj</button>
     </form>
-    <c:if test="#{spotifyServiceFacelets.albumNameBlank}">
-        <h2> Brak listy piosenek do wyświetlenia</h2>
-        <p>Wyszukaj Album</p>
-    </c:if>
-    <c:if test="#{!spotifyServiceFacelets.albumNameBlank}">
-        <form jsf:id="searchKeyUp">
-            <input type="text" jsf:id="searchInputKeyUp" jsf:value="#{spotifyServiceFacelets.searchKeyUpText}">
-                <f:ajax execute="searchInputKeyUp" render=":table searchInputKeyUp"
-                        event="keyup" listener="#{spotifyServiceFacelets.filterTracks}"
-                        delay="300"/>
-            </input>
-        </form>
-        <table jsf:id="table">
+
+    <!--Filtr ajax znalezionych albumów  -->
+    <form jsf:id="searchAlbumKeyUp">
+        <input type="text" jsf:id="searchAlbumInputKeyUp" jsf:value="#{spotifyServiceFacelets.searchAlbum}">
+
+        </input>
+    </form>
+
+    <!--Znalezione albumy po wyszukiwaniu-->
+    <div jsf:id="albums" class="box">
+        <h:form>
+            <h:selectOneRadio value="#{spotifyServiceFacelets.albumId}" class="box">
+                <div class="box">
+                    <f:selectItems value="#{spotifyServiceFacelets.filterAlbums()}" var="c"
+                                   itemLabel="#{c.name()}" itemValue="#{c.id()}" class="element" />
+                </div>
+            </h:selectOneRadio>
+            <h:commandButton value="Wybierz" action="#{spotifyServiceFacelets.getAlbumTracks()}"/>
+        </h:form>
+    </div>
+
+    <!--Filtrowanie piosenek-->
+    <form jsf:id="searchKeyUp">
+        <input type="text" jsf:id="searchInputKeyUp" jsf:value="#{spotifyServiceFacelets.searchKeyUpText}">
+            <f:ajax execute="searchInputKeyUp" render=":table searchInputKeyUp"
+                    event="keyup" listener="#{spotifyServiceFacelets.filterTracks}"
+                    delay="300"/>
+        </input>
+    </form>
+
+    <!--   Tabela piosenek  -->
+    <table jsf:id="table">
+        <tr>
+            <th>Track Number</th>
+            <th>Title</th>
+            <th>Duration</th>
+        </tr>
+
+        <ui:repeat value="#{spotifyServiceFacelets.filterTracks()}" var="track">
             <tr>
-                <th>Track Number</th>
-                <th>Title</th>
-                <th>Duration</th>
+                <td>#{track.track_number()}</td>
+                <td>#{track.name()}</td>
+                <td>#{track.duration_ms()}</td>
             </tr>
+        </ui:repeat>
 
-            <ui:repeat value="#{spotifyServiceFacelets.filterTracks()}" var="track">
-                <tr>
-                    <td>#{track.track_number()}</td>
-                    <td>#{track.name()}</td>
-                    <td>#{track.duration_ms()}</td>
-                </tr>
-            </ui:repeat>
+    </table>
 
-        </table>
-    </c:if>
 </section>
 </body>
 

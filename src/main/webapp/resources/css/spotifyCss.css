@@ -27,10 +27,9 @@
 
 .btn {
     position: relative;
-    display: block;
-    margin: 30px auto;
-    padding: 15px;
-    overflow: hidden;
+    width: auto;
+    margin: 10px auto;
+    padding: 10px;
     border-width: 0;
     outline: none;
     border-radius: 2px;
@@ -85,7 +84,7 @@ html {
 body {
     position: static;
     margin: 5%;
-    background-color: #ffffff;
+    background-color: #fffdfd;
     color: #343a5e;
     font-family: Arial Narrow, sans-serif;
     text-align: center;
@@ -140,4 +139,22 @@ input {
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+}
+.box>* {
+    flex: 1 1 80px;
+}
+
+.element {
+    margin: 5px;
+    position: relative;
+}
+
+.line {
+    display: inline-block;
+
 }
