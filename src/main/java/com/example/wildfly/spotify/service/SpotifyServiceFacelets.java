@@ -99,7 +99,7 @@ public class SpotifyServiceFacelets implements Serializable {
 
     public void getAlbumTracks() {
         allTrack=spotifyEndpoint.getAlbum(albumId).tracks().items();
-        LOGGER.info("jestem" + allTrack);
+        LOGGER.info("getAllAlbumsTracks: " + allTrack);
     }
 
     public void getAllAlbumsAfterSearch() {

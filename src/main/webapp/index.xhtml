@@ -16,6 +16,9 @@
 <section jsf:id="section">
     <h1>Spotify Search</h1>
 
+    <!-- Powitanie użytkownika -->
+    <p>Witaj #{userController.name}</p>
+
     <!-- Szukanie albumu   -->
     <form jsf:id="formSearchAlbum" class="search-tag-link">
         <input type="text" jsf:value="#{spotifyServiceFacelets.albumName}"/>
@@ -30,24 +33,27 @@
     </form>
 
     <!--Znalezione albumy po wyszukiwaniu-->
-    <div jsf:id="albums" class="box">
-        <h:form>
-            <h:selectOneRadio value="#{spotifyServiceFacelets.albumId}" class="box">
-                <div class="box">
-                    <f:selectItems value="#{spotifyServiceFacelets.filterAlbums()}" var="c"
-                                   itemLabel="#{c.name()}" itemValue="#{c.id()}" class="element" />
-                </div>
-            </h:selectOneRadio>
-            <h:commandButton value="Wybierz" action="#{spotifyServiceFacelets.getAlbumTracks()}"/>
-        </h:form>
-    </div>
+
+    <h:form>
+        <h:selectOneRadio id="selectRadio" value="#{spotifyServiceFacelets.albumId}" >
+            <div class="element">
+                <f:selectItems value="#{spotifyServiceFacelets.filterAlbums()}" var="c"
+                               itemLabel="#{c.name()}" itemValue="#{c.id()}">
+
+                </f:selectItems>
+            </div>
+        </h:selectOneRadio>
+        <f:ajax execute="selectRadio" render=":table" event="click"
+                listener="#{spotifyServiceFacelets.getAlbumTracks()}"/>
+    </h:form>
+
 
     <!--Filtrowanie piosenek-->
     <form jsf:id="searchKeyUp">
         <input type="text" jsf:id="searchInputKeyUp" jsf:value="#{spotifyServiceFacelets.searchKeyUpText}">
             <f:ajax execute="searchInputKeyUp" render=":table searchInputKeyUp"
-                    event="keyup" listener="#{spotifyServiceFacelets.filterTracks}"
-                    delay="300"/>
+                    event="keyup"
+                    delay="300"/> <!--  listener="#{spotifyServiceFacelets.filterTracks}" nie jest potrzebny, bo na dole jest wykoannie metody filterTrack -->
         </input>
     </form>
 

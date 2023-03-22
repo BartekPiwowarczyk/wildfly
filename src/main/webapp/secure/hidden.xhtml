@@ -6,10 +6,14 @@
       xmlns:h="jakarta.faces.html"
       xmlns:jsf="jakarta.faces"
       xmlns:ui="jakarta.faces.facelets"
-      xmlns:c="jakarta.tags.core">
-
+      xmlns:c="jakarta.tags.core"
+      xmlns:f="jakarta.faces.core">
 <head jsf:id="head">
-    <h:outputStylesheet library="css" name="spotifyCss.css?V=50"/>
+<title>Security</title>
 </head>
+
+<body jsf:id="body">
+Jesteś: #{userController.name}
+</body>
 
 </html>

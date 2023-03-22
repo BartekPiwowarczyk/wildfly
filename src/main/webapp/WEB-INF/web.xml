@@ -19,6 +19,24 @@
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Secured resources</web-resource-name>
+            <url-pattern>/secure/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>LOGGED_USER</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>Demo realm</realm-name>
+    </login-config>
+
+    <security-role>
+        <role-name>LOGGED_USER</role-name>
+    </security-role>
 
 
 </web-app>

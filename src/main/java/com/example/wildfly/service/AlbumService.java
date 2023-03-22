@@ -49,7 +49,6 @@ public class AlbumService {
     }
 
 
-
     public AlbumDTO createNewAlbum(AlbumDTO albumDTO) {
         LOGGER.info("create new Album");
         Album album = albumMapper.fromAlbumDTO(albumDTO);
@@ -78,7 +77,7 @@ public class AlbumService {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaQuery<Album> query = criteriaBuilder.createQuery(Album.class);
         Root<Album> root = query.from(Album.class);
-        Join<Album, Artist> artistJoin =  root.join(Album_.artistId);
+        Join<Album, Artist> artistJoin = root.join(Album_.artistId);
         Join<AlbumSong, Song> songJoin = (Join<AlbumSong, Song>) root.fetch(Album_.albumSongs, JoinType.LEFT).fetch(AlbumSong_.song, JoinType.LEFT);
 
         return em.createQuery(query).getResultList();
@@ -113,7 +112,7 @@ public class AlbumService {
         Join<Album, Artist> artistJoin = (Join<Album, Artist>) root.join(Album_.artistId);
         LOGGER.info("Fetch Artist");
 
-        query.select(criteriaBuilder.construct(AlbumDTOO.class, root.get(Album_.title), root.get(Album_.edition),artistJoin.get(Artist_.name)))
+        query.select(criteriaBuilder.construct(AlbumDTOO.class, root.get(Album_.title), root.get(Album_.edition), artistJoin.get(Artist_.name)))
                 .orderBy(criteriaBuilder.asc(root.get(Album_.title)));
         LOGGER.info("Stworzono query");
 
@@ -128,13 +127,13 @@ public class AlbumService {
                 .setResultTransformer(
                         new ResultTransformer() {
 
-                            final Map<Long,AlbumDTO> albumDTOOMap = new LinkedHashMap<>();
+                            final Map<Long, AlbumDTO> albumDTOOMap = new LinkedHashMap<>();
 
                             @Override
                             public Object transformTuple(Object[] objects, String[] strings) {
 
                                 Long albumId = (Long) objects[0];
-                                albumDTOOMap.putIfAbsent(albumId,new AlbumDTO(
+                                albumDTOOMap.putIfAbsent(albumId, new AlbumDTO(
                                         (String) objects[1],
                                         (String) objects[2],
                                         artistMapper.fromArtist((Artist) objects[3]),
@@ -152,44 +151,44 @@ public class AlbumService {
                                 return new ArrayList(albumDTOOMap.values());
                             }
                         }
-                ).setParameter("id",id).getResultList().stream().findFirst().orElse(null);
+                ).setParameter("id", id).getResultList().stream().findFirst().orElse(null);
     }
 //    select a.id,a.title,a.edition, ar.name, aso.position, song.title,song.remarks,song.duration from Album a left join a.artistId ar left join a.albumSongs aso left join aso.song song
 
-@SuppressWarnings("unchecked")
-public List<AlbumDTO> getAlbumDTOOListWithResultTransform() {
-    return em.createNamedQuery("Album.findWithResultTransformer")
-            .unwrap(org.hibernate.query.Query.class)
-            .setResultTransformer(
-                    new ResultTransformer() {
+    @SuppressWarnings("unchecked")
+    public List<AlbumDTO> getAlbumDTOOListWithResultTransform() {
+        return em.createNamedQuery("Album.findWithResultTransformer")
+                .unwrap(org.hibernate.query.Query.class)
+                .setResultTransformer(
+                        new ResultTransformer() {
 
-                        final Map<Long,AlbumDTO> albumDTOOMap = new LinkedHashMap<>();
+                            final Map<Long, AlbumDTO> albumDTOOMap = new LinkedHashMap<>();
 
-                        @Override
-                        public Object transformTuple(Object[] objects, String[] strings) {
+                            @Override
+                            public Object transformTuple(Object[] objects, String[] strings) {
 
-                            Long albumId = (Long) objects[0];
-                            albumDTOOMap.putIfAbsent(albumId,new AlbumDTO(
-                                    (String) objects[1],
-                                    (String) objects[2],
-                                    artistMapper.fromArtist((Artist) objects[3]),
-                                    new LinkedHashSet<>()
-                            ));
+                                Long albumId = (Long) objects[0];
+                                albumDTOOMap.putIfAbsent(albumId, new AlbumDTO(
+                                        (String) objects[1],
+                                        (String) objects[2],
+                                        artistMapper.fromArtist((Artist) objects[3]),
+                                        new LinkedHashSet<>()
+                                ));
 
-                            if (objects[4] instanceof Integer && objects[5] instanceof String && objects[6] instanceof String && objects[7] instanceof Integer) {
-                                albumDTOOMap.get(albumId).albumSongsDTO().add(new AlbumSongsDTO((Integer) objects[4],new SongDTO((String) objects[5],(String) objects[6],(Integer) objects[7])));
+                                if (objects[4] instanceof Integer && objects[5] instanceof String && objects[6] instanceof String && objects[7] instanceof Integer) {
+                                    albumDTOOMap.get(albumId).albumSongsDTO().add(new AlbumSongsDTO((Integer) objects[4], new SongDTO((String) objects[5], (String) objects[6], (Integer) objects[7])));
+                                }
+
+                                return albumDTOOMap.get(albumId);
                             }
 
-                            return albumDTOOMap.get(albumId);
+                            @Override
+                            public List transformList(List list) {
+                                return new ArrayList(albumDTOOMap.values());
+                            }
                         }
-
-                        @Override
-                        public List transformList(List list) {
-                            return new ArrayList(albumDTOOMap.values());
-                        }
-                    }
-            ).getResultList();
-}
+                ).getResultList();
+    }
 
     public List<AlbumDTOO> getAlbumsByArtistId(Long id) {
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();

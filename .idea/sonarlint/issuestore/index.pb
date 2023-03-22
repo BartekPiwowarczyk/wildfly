@@ -7,12 +7,6 @@ n
 >src/main/java/com/example/wildfly/spotify/auth/AuthConfig.java,9\c\9c0a7974eb0452db3982d20c6436f6cb05a38439
 }
 Msrc/main/java/com/example/wildfly/spotify/model/mapper/SpotifySongMapper.java,4\4\44d06042c7c62384f2b206f84466990ee257145b
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-h
-8src/main/java/com/example/wildfly/WfDemoApplication.java,4\7\476228b799b7ac6b1296d05aa007477cefa3a5de
-j
-:src/main/java/com/example/wildfly/model/dto/ArtistDTO.java,2\5\25146e4b4335fc8dae41d8e669fd5bc4512455a3
 v
 Fsrc/main/java/com/example/wildfly/spotify/model/dto/ArtistSpotify.java,7\6\76f67774e5a5793843c0d7c583389255dae18879
 u

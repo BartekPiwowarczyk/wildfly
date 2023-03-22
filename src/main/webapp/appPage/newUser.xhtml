@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:jsf="jakarta.faces"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:c="jakarta.tags.core"
+      xmlns:f="jakarta.faces.core">
+
+<ui:include src="../static/header.xhtml"></ui:include>
+<title>Logowanie</title>
+
+
+<body jsf:id="body">
+
+<h2>Dodaj użytkownika</h2>
+<form jsf:id="newUserForm" class="search-tag-link">
+   <input jsf:id="username" type="text" jsf:value="#{userController.username}"></input>
+   <input jsf:id="password" type="password" jsf:value="#{userController.password}"/>
+   <input jsf:id="role" type="text" jsf:value="#{userController.role}"/>
+   <button class="btn" jsf:action="#{userController.addUser()}">Dodaj</button>
+</form>
+
+</body>
+</html>

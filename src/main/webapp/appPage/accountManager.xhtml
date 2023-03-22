@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:jsf="jakarta.faces"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:c="jakarta.tags.core"
+      xmlns:f="jakarta.faces.core">
+
+<ui:include src="../static/header.xhtml"></ui:include>
+<title>Konta</title>
+
+
+<body jsf:id="body">
+
+<h2>Lista użytkowników</h2>
+<table jsf:id="table">
+    <tr>
+        <th>Username</th>
+        <th>Roles</th>
+        <th>Operations</th>
+    </tr>
+
+<ui:repeat value="#{userController.users}" var="user">
+    <tr>
+        <td>#{user.username()}</td>
+        <td>#{user.role()}</td>
+        <td><button class="btn">Przycisk</button></td>
+    </tr>
+</ui:repeat>
+</table>
+</body>
+</html>
