@@ -17,9 +17,18 @@
 
 <h2>Dodaj użytkownika</h2>
 <form jsf:id="newUserForm" class="search-tag-link">
-   <input jsf:id="username" type="text" jsf:value="#{userController.username}"></input>
+   <div>
+   <label id="labelName" jsf:for="username" class="">Name</label>
+   <input jsf:id="username" type="text" jsf:value="#{userController.username}" ></input>
+   </div>
+   <div>
+   <label id="labelPassword" jsf:for="password" class="">Password</label>
    <input jsf:id="password" type="password" jsf:value="#{userController.password}"/>
+   </div>
+   <div>
+   <label id="labelRole" jsf:for="role" class="">Role</label>
    <input jsf:id="role" type="text" jsf:value="#{userController.role}"/>
+   </div>
    <button class="btn" jsf:action="#{userController.addUser()}">Dodaj</button>
 </form>
 

@@ -1,14 +1,11 @@
 package com.example.wildfly.security;
 
-import com.example.wildfly.model.entity.AlbumSong;
-import jakarta.inject.Named;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
-@NamedQuery(name = "User.findAll",query = "SELECT distinct u from User u join fetch u.userRoles r")
+@NamedQuery(name = "User.findAll",query = "SELECT distinct u from User u join fetch u.roleName r")
 @Entity
 @Table(name = "USERS")
 public class User implements Serializable {
@@ -20,20 +17,24 @@ public class User implements Serializable {
     @Column(name = "PASSWORD_HASH")
     private String password;
 
-    @OneToMany
-    @JoinColumn(name="USERNAME", referencedColumnName = "USERNAME")
-//    @JoinTable(name="USER_ROLES",joinColumns = @JoinColumn(name="ROLE"))
-    private List<UserRoles> userRoles;
+
+    @ElementCollection
+    @CollectionTable(name = "USER_ROLES", joinColumns = {
+            @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME")
+    })
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ROLE")
+    private Collection<UserRoles> roleName;
 
     public User() {
     }
 
-    public List<UserRoles> getUserRoles() {
-        return userRoles;
+    public Collection<UserRoles> getRoleName() {
+        return roleName;
     }
 
-    public void setUserRoles(List<UserRoles> userRoles) {
-        this.userRoles = userRoles;
+    public void setRoleName(Collection<UserRoles> roleName) {
+        this.roleName = roleName;
     }
 
     public String getUsername() {

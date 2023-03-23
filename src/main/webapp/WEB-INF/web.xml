@@ -22,7 +22,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Secured resources</web-resource-name>
-            <url-pattern>/secure/*</url-pattern>
+            <url-pattern>/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>LOGGED_USER</role-name>

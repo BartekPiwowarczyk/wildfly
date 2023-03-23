@@ -105,6 +105,7 @@ h2 {
 }
 
 .btn.red {
+    .btn;
     background-color: #e74c3c;
 }
 
@@ -183,8 +184,23 @@ element {
     margin: 0.2rem;
     background-color: #2e52e3;
     border: #c0392b;
+}
+
+input {
+    padding: 3px;
+    box-shadow: 3px 3px 5px grey;
+    font-size: 14px;
+    font-weight: 600;
+    width: 300px;
+}
+
+label {
+    color: #090808;
+    font-weight: bold;
+    width: 130px;
 
 }
+label:after { content: ": " }
 
 
 

@@ -12,7 +12,7 @@ public class UserMapper {
 
     Logger LOGGER = LoggerFactory.getLogger(UserMapper.class);
     public UserDTO fromUser(User user) {
-        return new UserDTO(user.getUsername(), user.getUserRoles().stream().map(userRoles -> userRoles.getRole()).collect(Collectors.toList()));
+        return new UserDTO(user.getUsername(), user.getRoleName().stream().map(userRoles -> userRoles.name()).collect(Collectors.toList()));
 
     }
 

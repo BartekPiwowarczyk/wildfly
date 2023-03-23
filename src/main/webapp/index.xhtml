@@ -18,6 +18,9 @@
 
     <!-- Powitanie użytkownika -->
     <p>Witaj #{userController.name}</p>
+    <form jsf:id="form">
+        <button class="btn" jsf:action="#{userController.goPageEditUser()}">Edit</button>
+    </form>
 
     <!-- Szukanie albumu   -->
     <form jsf:id="formSearchAlbum" class="search-tag-link">
