@@ -47,10 +47,15 @@ public class UserController implements Serializable {
         this.allUserRoles = userRoles;
     }
 
+
     public String getName() {
         if (request!=null) {
             Principal principal = request.getUserPrincipal();
-            return principal != null ? principal.getName() : "Nieznany";
+            if(principal != null){
+                roles = userService.getUser(principal.getName()).getRoleName().stream().collect(Collectors.toSet());
+                return principal.getName();
+            }
+            return "Nieznany";
         }
         return "???";
     }

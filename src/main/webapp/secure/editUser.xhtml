@@ -29,7 +29,7 @@ Jesteś: #{userController.username = userController.name}
    </div>
    <div class="center">
       <h:selectManyCheckbox value="#{userController.roles}">
-         <f:selectItems value="#{userController.allUserRoles}" var="roles" itemLabel="#{roles}"
+         <f:selectItems  value="#{userController.allUserRoles}" var="roles" itemLabel="#{roles.name()}"
                         itemValue="#{roles}"/>
       </h:selectManyCheckbox>
    </div>

@@ -4,15 +4,14 @@ package com.example.wildfly.security;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.jws.soap.SOAPBinding;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Named
 @SessionScoped
@@ -50,11 +49,11 @@ public class Worker implements Serializable {
         userService.deleteUser(usernameToDelete);
     }
 
-    public void editSelectedUser(String username1) {
+    public void editSelectedUser(UserDTO user) {
         LOGGER.info("Edit selected user");
-        LOGGER.info("username1: {}",username1);
-        nameWorker = username1;
-
+        LOGGER.info("username1: {}",user.username());
+        nameWorker = user.username();
+        rolesWorker = user.role().stream().map(rolesWorker->UserRoles.valueOf(rolesWorker)).collect(Collectors.toSet());
     }
 
     public void editUser() {

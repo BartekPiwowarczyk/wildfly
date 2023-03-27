@@ -31,7 +31,7 @@
                 </h:commandLink>
             </h:form>
             <h:form>
-                <h:commandLink id="button2" action = "#{worker.editSelectedUser(user.username())}" value = "Edit" class="btn">
+                <h:commandLink id="button2" action = "#{worker.editSelectedUser(user)}" value = "Edit" class="btn">
                     <f:ajax execute="button2" render=":editUserForm"></f:ajax>
                 </h:commandLink>
             </h:form>
