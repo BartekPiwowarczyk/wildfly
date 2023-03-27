@@ -38,6 +38,7 @@
     color: #ecf0f1;
     font-size: 15px;
     transition: background-color .3s;
+    font-family: Arial Narrow, sans-serif;
 }
 
 .btn:hover, .btn:focus {
@@ -77,7 +78,7 @@
 }
 
 html {
-    position: relative;
+    position: static;
     height: 100%;
 }
 
@@ -88,7 +89,6 @@ body {
     color: #343a5e;
     font-family: Arial Narrow, sans-serif;
     text-align: center;
-
 }
 
 
@@ -105,7 +105,6 @@ h2 {
 }
 
 .btn.red {
-    .btn;
     background-color: #e74c3c;
 }
 
@@ -128,6 +127,14 @@ h1, h2, h3, h4, h5, h6,
 h1, .h1 {
     font-size: 2.5rem; }
 
+.user {
+    margin-left: 0.5rem;
+    font-family: Arial Narrow, sans-serif;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #273cbb;
+}
+
 h1, h2, h3, h4, h5,
 .h1, .h2, .h3, .h4, .h5 {
     line-height: 1.4;
@@ -143,11 +150,8 @@ input {
 }
 
 .box {
-    display: flex;
+    display: -webkit-box;
     flex-wrap: wrap;
-}
-.box>* {
-    flex: 1 1 80px;
 }
 
 .element {
@@ -186,7 +190,7 @@ element {
     border: #c0392b;
 }
 
-input {
+input[type=text],input[type=password] {
     padding: 3px;
     box-shadow: 3px 3px 5px grey;
     font-size: 14px;
@@ -200,7 +204,22 @@ label {
     width: 130px;
 
 }
-label:after { content: ": " }
+label:after { content: " " }
 
+a:link, a:visited {
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:hover, a:active {
+    background-color: red;
+}
+
+.center {
+    position: static;
+    margin-left: 650px;
+}
 
 

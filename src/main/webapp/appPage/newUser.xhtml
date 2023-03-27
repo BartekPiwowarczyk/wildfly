@@ -9,28 +9,35 @@
       xmlns:c="jakarta.tags.core"
       xmlns:f="jakarta.faces.core">
 
-<ui:include src="../static/header.xhtml"></ui:include>
-<title>Logowanie</title>
+<ui:composition template="/index.xhtml">
+    <ui:define name="title">Logowanie</ui:define>
+    <ui:define name="body">
 
 
-<body jsf:id="body">
+        <h2>Dodaj użytkownika</h2>
+        <form jsf:id="newUserForm" class="search-tag-link">
+            <div>
+                <label id="labelName" jsf:for="username" class="">Name</label>
+                <input jsf:id="username" type="text" jsf:value="#{worker.workerName}"></input>
+            </div>
+            <div>
+                <label id="labelPassword" jsf:for="password" class="">Password</label>
+                <input jsf:id="password" type="password" jsf:value="#{worker.passwordWorker}"/>
+            </div>
 
-<h2>Dodaj użytkownika</h2>
-<form jsf:id="newUserForm" class="search-tag-link">
-   <div>
-   <label id="labelName" jsf:for="username" class="">Name</label>
-   <input jsf:id="username" type="text" jsf:value="#{userController.username}" ></input>
-   </div>
-   <div>
-   <label id="labelPassword" jsf:for="password" class="">Password</label>
-   <input jsf:id="password" type="password" jsf:value="#{userController.password}"/>
-   </div>
-   <div>
-   <label id="labelRole" jsf:for="role" class="">Role</label>
-   <input jsf:id="role" type="text" jsf:value="#{userController.role}"/>
-   </div>
-   <button class="btn" jsf:action="#{userController.addUser()}">Dodaj</button>
-</form>
+            <div class="center">
+                <h:selectManyCheckbox id="newRoles" value="#{worker.rolesWorker}">
+                    <f:selectItems value="#{userController.allUserRoles}" var="roles" itemLabel="#{roles}"
+                                   itemValue="#{roles}"/>
+                </h:selectManyCheckbox>
+            </div>
 
-</body>
+            <h:commandLink id="button2" action = "#{worker.addWorker()}" value = "Add" class="btn">
+
+            </h:commandLink>
+        </form>
+
+
+    </ui:define>
+</ui:composition>
 </html>

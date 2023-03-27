@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @NamedQuery(name = "User.findAll",query = "SELECT distinct u from User u join fetch u.roleName r")
+@NamedQuery(name = "User.findAllRoles",query = "SELECT r from User u join  u.roleName r")
 @Entity
 @Table(name = "USERS")
 public class User implements Serializable {

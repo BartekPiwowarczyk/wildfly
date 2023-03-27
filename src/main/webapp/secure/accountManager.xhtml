@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:jsf="jakarta.faces"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:c="jakarta.tags.core"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="/index.xhtml">
+<ui:define name="title">Użytkownicy</ui:define>
+<ui:define name="body">
+<h2>Lista użytkowników</h2>
+<table jsf:id="table">
+    <tr>
+        <th>Username</th>
+        <th>Roles</th>
+        <th>Operations</th>
+    </tr>
+
+<ui:repeat value="#{userController.users}" var="user">
+    <tr>
+        <td>#{user.username()}</td>
+        <td>#{user.role()}</td>
+        <td>
+            <h:form>
+                <h:commandLink id="button1" action = "#{worker.deleteUser(user.username())}" value = "Delete" class="btn red">
+                    <f:ajax execute="button1" render=":table"></f:ajax>
+                </h:commandLink>
+            </h:form>
+            <h:form>
+                <h:commandLink id="button2" action = "#{worker.editSelectedUser(user.username())}" value = "Edit" class="btn">
+                    <f:ajax execute="button2" render=":editUserForm"></f:ajax>
+                </h:commandLink>
+            </h:form>
+        </td>
+    </tr>
+</ui:repeat>
+</table>
+    <form jsf:id="editUserForm" class="search-tag-link">
+        <div>
+            <label id="labelName" jsf:for="username" class="">#{worker.workerName}</label>
+            <input jsf:id="username" type="hidden" jsf:value="#{worker.workerName}" ></input>
+        </div>
+        <div>
+            <label id="labelPassword" jsf:for="password" class="">Password</label>
+            <input jsf:id="password" type="password" jsf:value="#{worker.passwordWorker}"/>
+        </div>
+        <div>
+            <label id="labelConfirmPassword" jsf:for="passwordConfirm" class="">Confirm Password</label>
+            <input jsf:id="passwordConfirm" type="password" jsf:value="#{worker.passwordConfirm}"/>
+        </div>
+        <div class="center">
+            <h:selectManyCheckbox value="#{worker.rolesWorker}">
+                <f:selectItems value="#{userController.allUserRoles}" var="roles" itemLabel="#{roles}"
+                               itemValue="#{roles}"/>
+            </h:selectManyCheckbox>
+        </div>
+        <button class="btn" jsf:action="#{worker.editUser()}">Edytuj</button>
+    </form>
+
+</ui:define>
+</ui:composition>
+</html>

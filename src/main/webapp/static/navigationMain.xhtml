@@ -9,6 +9,14 @@
       xmlns:c="jakarta.tags.core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
-Navigation Main
+    <div class="box">
+        <h:link class="btn" value="Home" outcome="/index"></h:link>
+        <h:link class="btn" value="Edit" outcome="/secure/editUser">
+        </h:link>
+        <h:link class="btn" value="Add" outcome="/appPage/newUser.xhtml"></h:link>
+        <h:link class="btn" value="Users" outcome="/secure/accountManager.xhtml"></h:link>
+        <p class="user">Witaj: #{userController.name}</p>
+    </div>
+
 </f:view>
 </html>

@@ -8,77 +8,78 @@
       xmlns:ui="jakarta.faces.facelets"
       xmlns:c="jakarta.tags.core"
       xmlns:f="jakarta.faces.core">
-<ui:include src="static/header.xhtml"></ui:include>
-<title>Główna</title>
-<ui:include src="static/navigationMain.xhtml"></ui:include>
 
-<body jsf:id="body">
-<section jsf:id="section">
-    <h1>Spotify Search</h1>
+<head jsf:id="head">
+    <title><ui:insert name="title"> Home</ui:insert></title>
+    <ui:include src="static/header.xhtml"></ui:include>
+</head>
 
-    <!-- Powitanie użytkownika -->
-    <p>Witaj #{userController.name}</p>
-    <form jsf:id="form">
-        <button class="btn" jsf:action="#{userController.goPageEditUser()}">Edit</button>
-    </form>
+<h:body>
+    <div id="header">
+        <ui:insert name="header">
+            <ui:include src="static/navigationMain.xhtml"></ui:include>
+        </ui:insert>
+    </div>
+    <div id="body">
+        <ui:insert name ="body">
+            <h1>Spotify Search</h1>
+            <!-- Szukanie albumu   -->
+            <form jsf:id="formSearchAlbum" class="search-tag-link">
+                <input type="text" jsf:value="#{spotifyServiceFacelets.albumName}"/>
+                <button class="btn" jsf:action="#{spotifyServiceFacelets.getAllAlbumsAfterSearch()}">Szukaj</button>
+            </form>
 
-    <!-- Szukanie albumu   -->
-    <form jsf:id="formSearchAlbum" class="search-tag-link">
-        <input type="text" jsf:value="#{spotifyServiceFacelets.albumName}"/>
-        <button class="btn" jsf:action="#{spotifyServiceFacelets.getAllAlbumsAfterSearch()}">Szukaj</button>
-    </form>
+            <!--Filtr ajax znalezionych albumów  -->
+            <form jsf:id="searchAlbumKeyUp">
+                <input type="text" jsf:id="searchAlbumInputKeyUp" jsf:value="#{spotifyServiceFacelets.searchAlbum}">
 
-    <!--Filtr ajax znalezionych albumów  -->
-    <form jsf:id="searchAlbumKeyUp">
-        <input type="text" jsf:id="searchAlbumInputKeyUp" jsf:value="#{spotifyServiceFacelets.searchAlbum}">
+                </input>
+            </form>
 
-        </input>
-    </form>
+            <!--Znalezione albumy po wyszukiwaniu-->
 
-    <!--Znalezione albumy po wyszukiwaniu-->
+            <h:form>
+                <h:selectOneRadio id="selectRadio" value="#{spotifyServiceFacelets.albumId}">
+                    <div class="element">
+                        <f:selectItems value="#{spotifyServiceFacelets.filterAlbums()}" var="c"
+                                       itemLabel="#{c.name()}" itemValue="#{c.id()}">
 
-    <h:form>
-        <h:selectOneRadio id="selectRadio" value="#{spotifyServiceFacelets.albumId}" >
-            <div class="element">
-                <f:selectItems value="#{spotifyServiceFacelets.filterAlbums()}" var="c"
-                               itemLabel="#{c.name()}" itemValue="#{c.id()}">
-
-                </f:selectItems>
-            </div>
-        </h:selectOneRadio>
-        <f:ajax execute="selectRadio" render=":table" event="click"
-                listener="#{spotifyServiceFacelets.getAlbumTracks()}"/>
-    </h:form>
+                        </f:selectItems>
+                    </div>
+                </h:selectOneRadio>
+                <f:ajax execute="selectRadio" render=":table" event="click"
+                        listener="#{spotifyServiceFacelets.getAlbumTracks()}"/>
+            </h:form>
 
 
-    <!--Filtrowanie piosenek-->
-    <form jsf:id="searchKeyUp">
-        <input type="text" jsf:id="searchInputKeyUp" jsf:value="#{spotifyServiceFacelets.searchKeyUpText}">
-            <f:ajax execute="searchInputKeyUp" render=":table searchInputKeyUp"
-                    event="keyup"
-                    delay="300"/> <!--  listener="#{spotifyServiceFacelets.filterTracks}" nie jest potrzebny, bo na dole jest wykoannie metody filterTrack -->
-        </input>
-    </form>
+            <!--Filtrowanie piosenek-->
+            <form jsf:id="searchKeyUp">
+                <input type="text" jsf:id="searchInputKeyUp" jsf:value="#{spotifyServiceFacelets.searchKeyUpText}">
+                    <f:ajax execute="searchInputKeyUp" render=":table searchInputKeyUp"
+                            event="keyup"
+                            delay="300"/> <!--  listener="#{spotifyServiceFacelets.filterTracks}" nie jest potrzebny, bo na dole jest wykoannie metody filterTrack -->
+                </input>
+            </form>
 
-    <!--   Tabela piosenek  -->
-    <table jsf:id="table">
-        <tr>
-            <th>Track Number</th>
-            <th>Title</th>
-            <th>Duration</th>
-        </tr>
+            <!--   Tabela piosenek  -->
+            <table jsf:id="table">
+                <tr>
+                    <th>Track Number</th>
+                    <th>Title</th>
+                    <th>Duration</th>
+                </tr>
 
-        <ui:repeat value="#{spotifyServiceFacelets.filterTracks()}" var="track">
-            <tr>
-                <td>#{track.track_number()}</td>
-                <td>#{track.name()}</td>
-                <td>#{track.duration_ms()}</td>
-            </tr>
-        </ui:repeat>
+                <ui:repeat value="#{spotifyServiceFacelets.filterTracks()}" var="track">
+                    <tr>
+                        <td>#{track.track_number()}</td>
+                        <td>#{track.name()}</td>
+                        <td>#{track.duration_ms()}</td>
+                    </tr>
+                </ui:repeat>
 
-    </table>
-
-</section>
-</body>
+            </table>
+        </ui:insert>
+    </div>
+</h:body>
 
 </html>

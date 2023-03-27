@@ -76,19 +76,28 @@ public class UserService implements Serializable {
     }
 
 
-    public void editUser(User userToUpdate, String id) {
-        User user = getUser(id);
-        user.setUsername(userToUpdate.getUsername());
+    public void editUser(User userToUpdate) {
+        User user = getUser(userToUpdate.getUsername());
+
         user.setPassword(userToUpdate.getPassword());
         LOGGER.info("before edit list");
-//        for (UserRoles element : user.getRoleName()) {
-//            for (UserRoles rolesToUpdate : userToUpdate.getRoleName())
-//                if(!element.equals(rolesToUpdate)) {
-//                    user.getRoleName().add(rolesToUpdate);
-//                }
-//        }
+        user.setRoleName(userToUpdate.getRoleName());
         LOGGER.info("username: {}, password: {}, roles: {}",user.getUsername(),user.getPassword(),user.getRoleName());
         em.merge(user);
 
     }
+
+    public void deleteUser(String username) {
+            LOGGER.info("deleteUser : {}",username);
+            User reference = em.getReference(User.class, username);;
+            LOGGER.info("Referencja : {}",reference);
+            em.remove(reference);
+    }
+
+    public List<UserRoles> getAllRoles() {
+        List<UserRoles> rolesList = em.createNamedQuery("User.findAllRoles", UserRoles.class).getResultList();
+        LOGGER.info("Roles from db: {}",rolesList);
+        return rolesList;
+    }
+
 }
